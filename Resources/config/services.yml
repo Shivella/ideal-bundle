@@ -1,0 +1,15 @@
+services:
+    mollie_driver:
+        class: Usoft\IDealBundle\Driver\MollieDriver
+        arguments:
+            - []
+
+    easy_ideal_driver:
+        class: Usoft\IDealBundle\Driver\EasyIDealDriver
+        arguments:
+            - []
+
+    usoft.form.type.ideal:
+        class: Usoft\IDealBundle\Form\Type\IDealType
+        tags:
+            - { name: form.type, alias: ideal }
