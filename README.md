@@ -60,9 +60,7 @@ Usage in Controller
 
 public function confirmAction()
 {
-    $easyIdeal = $easyIdeal = $this->get('easy_ideal');
-    
-    if ($easyIdeal->confirm()) {
+    if ($this->get('easy_ideal')->confirm()) {
         // handle order....
     } else {
         // Something went wrong...
@@ -71,7 +69,7 @@ public function confirmAction()
 
 public function sendAction(Request $request)
 {
-    $easyIdeal = $easyIdeal = $this->get('easy_ideal');
+    $easyIdeal = $this->get('easy_ideal');
     $redirectUrl = $this->generateUrl('acme_route_name', array(), true);
     $amount = 120.99;
     
