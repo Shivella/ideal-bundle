@@ -18,7 +18,7 @@ Installation is a quick 3 step process:
 Add UsoftIDealBundle by running the command:
 
 ``` bash
-$ composer require shivella/ideal-bundle ~1.0
+$ composer require shivella/ideal-bundle "dev-master"
 ```
 
 ### Step 2: Enable the bundle
