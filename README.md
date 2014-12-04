@@ -80,7 +80,6 @@ public function sendAction(Request $request)
 
     if ($form->isValid()) {
         $bank = new Bank($form->getData()['banks'], 'bank');
-        $redirectUrl = $this->generateUrl('usoft_webshop_order_ideal', array(), true);
 
         return $ideal->execute($bank, $amount, $redirectUrl);
     }
