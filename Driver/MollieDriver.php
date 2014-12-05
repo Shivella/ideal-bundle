@@ -25,6 +25,8 @@ class MollieDriver implements IDealInterface
     /** @var Mollie_API_Client */
     private $mollie;
 
+    /** @var */
+
     /**
      * @param array $config
      */
@@ -86,6 +88,6 @@ class MollieDriver implements IDealInterface
      */
     private function getFile()
     {
-        return '/tmp/'. session_id();
+        return join(DIRECTORY_SEPARATOR, strip(sys_get_temp_dir(), DIRECTORY_SEPARATOR), session_id());
     }
 }
