@@ -47,6 +47,7 @@ usoft_i_deal:
             id: my_secret_id
             key: my_secret_key
             secret: my_secret_secret
+            description: easy ideal payment
 ```
 
 
@@ -81,6 +82,8 @@ public function sendAction(Request $request)
 
         return $easyIdeal->execute($bank, $amount, $redirectUrl);
     }
+    
+    return $this->render('Order/ideal.html.twig', array('form' => $form->renderView()));
 }
 ```
 
