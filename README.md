@@ -83,7 +83,7 @@ public function sendAction(Request $request)
         return $easyIdeal->execute($bank, $amount, $redirectUrl);
     }
     
-    return $this->render('Order/ideal.html.twig', array('form' => $form->renderView()));
+    return $this->render('Order/ideal.html.twig', array('form' => $form->createView()));
 }
 ```
 
