@@ -26,13 +26,25 @@ class IDealType extends abstractType
     {
         $builder->add(
             'banks', 'choice', array(
-                'choices' => array_map(function($bank) {
-                    /** @var Bank $bank */
-
-                    return array($bank->getId() => $bank->getName());
-                }, $options['data']),
+                'choices' => $this->getBankList($options['data']),
+                'required'  => true,
             )
         );
+    }
+
+    /**
+     * @param Bank[] $banks
+     *
+     * @return array
+     */
+    private function getBankList($banks)
+    {
+        $list = array();
+        foreach ($banks as $bank) {
+            $list[$bank->getId()] = $bank->getName();
+        }
+
+        return $list;
     }
 
     /**
