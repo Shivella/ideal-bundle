@@ -41,8 +41,8 @@ public function registerBundles()
 ```yaml
 # app/config/config.yml
 
-ideal:
-    usoft_providers:
+usoft_i_deal:
+    providers:
         easy_ideal:
             id: my_secret_id
             key: my_secret_key
