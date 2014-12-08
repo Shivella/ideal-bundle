@@ -105,6 +105,6 @@ class EasyIDealDriver implements IDealInterface
      */
     private function getFile()
     {
-        return join(DIRECTORY_SEPARATOR, strip(sys_get_temp_dir(), DIRECTORY_SEPARATOR), session_id());
+        return sys_get_temp_dir() . DIRECTORY_SEPARATOR . session_id();
     }
 }
