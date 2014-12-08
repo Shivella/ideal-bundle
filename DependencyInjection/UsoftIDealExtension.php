@@ -24,7 +24,7 @@ class UsoftIDealExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        foreach ($configs[0]['providers'] as $name => $serviceConfig) {
+        foreach ($config['providers'] as $name => $serviceConfig) {
 
             if ($name == 'easy_ideal') {
                 $container->setDefinition('easy_ideal', new DefinitionDecorator('easy_ideal_driver'))->replaceArgument(0, $serviceConfig);
