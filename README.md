@@ -42,7 +42,7 @@ public function registerBundles()
 # app/config/config.yml
 
 ideal:
-    providers:
+    usoft_providers:
         easy_ideal:
             id: my_secret_id
             key: my_secret_key
@@ -79,7 +79,7 @@ public function sendAction(Request $request)
     if ($form->isValid()) {
         $bank = new Bank($form->getData()['banks'], 'bank');
 
-        return $ideal->execute($bank, $amount, $redirectUrl);
+        return $easyIdeal->execute($bank, $amount, $redirectUrl);
     }
 }
 ```
