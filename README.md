@@ -59,6 +59,25 @@ Usage in Controller
 <?php
 // Acme/WebshopBundle/OrderController.php
 
+public function paymentAction(Request $request)
+{
+    $easyIdeal = $this->get('easy_ideal');
+    
+    $form = $this->createForm('ideal', $easyIdeal->getBanks());
+    $form->handleRequest($request);
+
+    if ($form->isValid()) {
+        
+        $bank = new Bank($form->getData()['banks'], 'bank');
+        $amount = (float) 120.99;
+        $redirectUrl = $this->generateUrl('route_to_confirm_action', array(), true);
+
+        return $easyIdeal->execute($bank, $amount, $redirectUrl);
+    }
+    
+    return $this->render('Order/payment.html.twig', array('form' => $form->createView()));
+}
+
 public function confirmAction()
 {
     if ($this->get('easy_ideal')->confirm()) {
@@ -66,24 +85,6 @@ public function confirmAction()
     } else {
         // Something went wrong...
     }
-}
-
-public function sendAction(Request $request)
-{
-    $easyIdeal = $this->get('easy_ideal');
-    $redirectUrl = $this->generateUrl('acme_route_name', array(), true);
-    $amount = 120.99;
-    
-    $form = $this->createForm('ideal', $easyIdeal->getBanks());
-    $form->handleRequest($request);
-
-    if ($form->isValid()) {
-        $bank = new Bank($form->getData()['banks'], 'bank');
-
-        return $easyIdeal->execute($bank, $amount, $redirectUrl);
-    }
-    
-    return $this->render('Order/ideal.html.twig', array('form' => $form->createView()));
 }
 ```
 
