@@ -3,7 +3,6 @@
 namespace Usoft\IDealBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**
  * Class UsoftIDealBundle
