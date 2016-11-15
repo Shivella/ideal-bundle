@@ -41,13 +41,13 @@ public function registerBundles()
 ```yaml
 # app/config/config.yml
 
+# ideal Mollie
 usoft_i_deal:
-    providers:
-        easy_ideal:
-            id: my_secret_id
-            key: my_secret_key
-            secret: my_secret_secret
-            description: easy ideal payment
+    mollie:
+        key: secret_mollie_key
+        description: "Mollie payment"
+        test_mode: true
+
 ```
 
 
