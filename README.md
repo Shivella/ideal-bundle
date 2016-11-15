@@ -56,13 +56,13 @@ Usage in Controller
 
 ``` php
 <?php
-// Acme/WebshopBundle/OrderController.php
+// Acme/Bundle/OrderController.php
 
 public function paymentAction(Request $request)
 {
-    $easyIdeal = $this->get('mollie');
+    $mollie = $this->get('mollie');
     
-    $form = $this->createForm(IdealType::class, $easyIdeal->getBanks());
+    $form = $this->createForm(IdealType::class, $mollie->getBanks());
     $form->handleRequest($request);
 
     if ($form->isValid()) {
@@ -71,7 +71,7 @@ public function paymentAction(Request $request)
         $amount = (float) 120.99;
         $redirectUrl = $this->generateUrl('route_to_confirm_action', array(), UrlGeneratorInterface::ABSOLUTE_URL);
 
-        return $easyIdeal->execute($bank, $amount, $redirectUrl);
+        return $mollie->execute($bank, $amount, $redirectUrl);
     }
     
     return $this->render('payment.html.twig', ['form' => $form->createView()]);
