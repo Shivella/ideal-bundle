@@ -1,7 +1,11 @@
 services:
+    mollie.client:
+      class: Mollie_API_Client
+
     mollie:
         class: Usoft\IDealBundle\Driver\MollieDriver
         arguments:
+            - "@mollie.client"
             - %mollie_key%
             - %mollie_description%
 

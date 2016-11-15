@@ -46,7 +46,6 @@ usoft_i_deal:
     mollie:
         key: secret_mollie_key
         description: "Mollie payment"
-        test_mode: true
 
 ```
 

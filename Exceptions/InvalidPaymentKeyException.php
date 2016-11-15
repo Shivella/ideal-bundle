@@ -9,10 +9,11 @@
 namespace Usoft\IDealBundle\Exceptions;
 
 /**
- * Class DriverNotFoundException
+ * Class InvalidPaymentKeyException
  *
  * @author Wessel Strengholt <wessel.strengholt@gmail.com>
  */
-class DriverNotFoundException extends \RuntimeException
+class InvalidPaymentKeyException extends \Exception
 {
+
 }

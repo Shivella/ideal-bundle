@@ -15,4 +15,5 @@ namespace Usoft\IDealBundle\Exceptions;
  */
 class BankLoaderException extends \RuntimeException
 {
+
 }

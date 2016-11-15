@@ -11,7 +11,10 @@ namespace Usoft\IDealBundle\Driver;
 use Mollie_API_Client;
 use Mollie_API_Object_Method;
 use Usoft\IDealBundle\Model\Bank;
+use Usoft\IDealBundle\Exceptions\BankLoaderException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Usoft\IDealBundle\Exceptions\IDealExecuteException;
+use Usoft\IDealBundle\Exceptions\InvalidPaymentKeyException;
 
 /**
  * Class MollieDriver
@@ -27,15 +30,15 @@ class MollieDriver implements IDealInterface
     private $mollie;
 
     /**
-     * @param string $key
-     * @param string $description
+     * @param Mollie_API_Client $client
+     * @param string            $key
+     * @param string            $description
      */
-    public function __construct($key, $description)
+    public function __construct(Mollie_API_Client $client, $key, $description)
     {
         $this->description = $description;
-
-        $this->mollie = new Mollie_API_Client;
-        $this->mollie->setApiKey($key);
+        $client->setApiKey($key);
+        $this->mollie = $client;
     }
 
     /**
@@ -44,12 +47,16 @@ class MollieDriver implements IDealInterface
     public function getBanks()
     {
         $bankList = [];
+        try {
+            $issuers = $this->mollie->issuers->all();
+            foreach ($issuers as $issuer) {
+                $bankList[] = new Bank($issuer->id, $issuer->name);
+            }
 
-        foreach ($this->mollie->issuers->all() as $issuer) {
-            $bankList[] = new Bank($issuer->id, $issuer->name);
+            return $bankList;
+        } catch (\Exception $exception) {
+            throw new BankLoaderException('Cannot load issuers from mollie');
         }
-
-        return $bankList;
     }
 
     /**
@@ -58,20 +65,26 @@ class MollieDriver implements IDealInterface
      * @param string $returnUrl
      *
      * @return RedirectResponse
+     *
+     * @throws IDealExecuteException
      */
     public function execute(Bank $bank, $amount, $returnUrl)
     {
-        $payment = $this->mollie->payments->create([
-            "amount"      => $amount,
-            "description" => $this->description,
-            "redirectUrl" => $returnUrl,
-            "method" => Mollie_API_Object_Method::IDEAL,
-            "issuer" => $bank->getId(),
-        ]);
+        try {
+            $payment = $this->mollie->payments->create([
+                "amount"      => $amount,
+                "description" => $this->description,
+                "redirectUrl" => $returnUrl,
+                "method"      => Mollie_API_Object_Method::IDEAL,
+                "issuer"      => $bank->getId(),
+            ]);
 
-        file_put_contents($this->getFile(), $payment->id);
+            file_put_contents($this->getFile(), $payment->id);
 
-        return new RedirectResponse($payment->getPaymentUrl());
+            return new RedirectResponse($payment->getPaymentUrl());
+        } catch (\Exception $exception) {
+            throw new IDealExecuteException($exception->getMessage());
+        }
     }
 
     /**
@@ -81,9 +94,6 @@ class MollieDriver implements IDealInterface
     {
         try {
             $key = file_get_contents($this->getFile());
-            if (false === $key) {
-                return false;
-            }
 
             return $this->mollie->payments->get($key)->isPaid();
         } catch (\Exception $exception) {
@@ -93,9 +103,15 @@ class MollieDriver implements IDealInterface
 
     /**
      * @return string
+     *
+     * @throws InvalidPaymentKeyException
      */
     private function getFile()
     {
-        return sys_get_temp_dir() . DIRECTORY_SEPARATOR . session_id();
+        try {
+            return sys_get_temp_dir() . DIRECTORY_SEPARATOR . session_id();
+        } catch (\Exception $exception) {
+            throw new InvalidPaymentKeyException('Cannot resolve payment key');
+        }
     }
 }

@@ -15,4 +15,5 @@ namespace Usoft\IDealBundle\Exceptions;
  */
 class IDealExecuteException extends \Exception
 {
+
 }

@@ -24,7 +24,6 @@ class Configuration implements ConfigurationInterface
                     ->arrayNode('mollie')->canBeUnset()->children()
                         ->scalarNode('key')->isRequired()->end()
                         ->scalarNode('description')->defaultValue('mollie ideal payment')->end()
-                        ->booleanNode('test_mode')->defaultTrue()->end()
                     ->end()
                 ->end();
 

@@ -26,7 +26,6 @@ class UsoftIDealExtension extends Extension
 
         $container->setParameter('mollie_key', $config['mollie']['key']);
         $container->setParameter('mollie_description', $config['mollie']['description']);
-        $container->setParameter('mollie_test_mode', $config['mollie']['test_mode']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
