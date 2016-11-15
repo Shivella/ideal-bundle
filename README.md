@@ -2,7 +2,7 @@ iDeal-bundle
 ============
 
 The iDeal bundle adds support for transferring iDeal payments with provider such as mollie, easy ideal.
-iDeal-bundle provides services which can used in Symfony2 for requesting iDeal api calls.
+iDeal-bundle provides services which can used in Symfony3 for requesting iDeal api calls.
 
 Installation
 ------------
@@ -18,7 +18,7 @@ Installation is a quick 3 step process:
 Add UsoftIDealBundle by running the command:
 
 ``` bash
-$ composer require shivella/ideal-bundle "dev-master"
+$ composer require shivella/ideal-bundle
 ```
 
 ### Step 2: Enable the bundle
