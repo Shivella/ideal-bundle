@@ -24,16 +24,9 @@ class UsoftIDealExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        foreach ($config['providers'] as $name => $serviceConfig) {
-
-            if ($name == 'easy_ideal') {
-                $container->setDefinition('easy_ideal', new DefinitionDecorator('easy_ideal_driver'))->replaceArgument(0, $serviceConfig);
-            }
-
-            if ($name == 'mollie') {
-                $container->setDefinition('mollie', new DefinitionDecorator('mollie_driver'))->replaceArgument(0, $serviceConfig);
-            }
-        }
+        $container->setParameter('mollie_key', $config['mollie']['key']);
+        $container->setParameter('mollie_description', $config['mollie']['description']);
+        $container->setParameter('mollie_test_mode', $config['mollie']['test_mode']);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

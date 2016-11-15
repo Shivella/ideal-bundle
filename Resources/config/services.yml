@@ -1,13 +1,9 @@
 services:
-    mollie_driver:
+    mollie:
         class: Usoft\IDealBundle\Driver\MollieDriver
         arguments:
-            - []
-
-    easy_ideal_driver:
-        class: Usoft\IDealBundle\Driver\EasyIDealDriver
-        arguments:
-            - []
+            - %mollie_key%
+            - %mollie_description%
 
     usoft.form.type.ideal:
         class: Usoft\IDealBundle\Form\Type\IDealType

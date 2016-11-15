@@ -61,26 +61,26 @@ Usage in Controller
 
 public function paymentAction(Request $request)
 {
-    $easyIdeal = $this->get('easy_ideal');
+    $easyIdeal = $this->get('mollie');
     
-    $form = $this->createForm('ideal', $easyIdeal->getBanks());
+    $form = $this->createForm(IdealType::class, $easyIdeal->getBanks());
     $form->handleRequest($request);
 
     if ($form->isValid()) {
         
         $bank = new Bank($form->getData()['banks'], 'bank');
         $amount = (float) 120.99;
-        $redirectUrl = $this->generateUrl('route_to_confirm_action', array(), true);
+        $redirectUrl = $this->generateUrl('route_to_confirm_action', array(), UrlGeneratorInterface::ABSOLUTE_URL);
 
         return $easyIdeal->execute($bank, $amount, $redirectUrl);
     }
     
-    return $this->render('Order/payment.html.twig', array('form' => $form->createView()));
+    return $this->render('payment.html.twig', ['form' => $form->createView()]);
 }
 
 public function confirmAction()
 {
-    if ($this->get('easy_ideal')->confirm()) {
+    if ($this->get('mollie')->confirm()) {
         // handle order....
     } else {
         // Something went wrong...

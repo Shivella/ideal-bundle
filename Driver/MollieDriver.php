@@ -9,6 +9,7 @@
 namespace Usoft\IDealBundle\Driver;
 
 use Mollie_API_Client;
+use Mollie_API_Object_Method;
 use Usoft\IDealBundle\Model\Bank;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -19,22 +20,22 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class MollieDriver implements IDealInterface
 {
-    /** @var array */
-    private $config;
+    /** @var string */
+    private $description;
 
     /** @var Mollie_API_Client */
     private $mollie;
 
-    /** @var */
-
     /**
-     * @param array $config
+     * @param string $key
+     * @param string $description
      */
-    public function __construct($config)
+    public function __construct($key, $description)
     {
-        $this->config = $config;
+        $this->description = $description;
+
         $this->mollie = new Mollie_API_Client;
-        $this->mollie->setApiKey($config['key']);
+        $this->mollie->setApiKey($key);
     }
 
     /**
@@ -42,9 +43,13 @@ class MollieDriver implements IDealInterface
      */
     public function getBanks()
     {
-        return array_map(function($bank) {
-            return new Bank($bank->id, $bank->name);
-        }, $this->mollie->issuers->all());
+        $bankList = [];
+
+        foreach ($this->mollie->issuers->all() as $issuer) {
+            $bankList[] = new Bank($issuer->id, $issuer->name);
+        }
+
+        return $bankList;
     }
 
     /**
@@ -56,13 +61,13 @@ class MollieDriver implements IDealInterface
      */
     public function execute(Bank $bank, $amount, $returnUrl)
     {
-        $payment = $this->mollie->payments->create(array(
+        $payment = $this->mollie->payments->create([
             "amount"      => $amount,
-            "description" => $this->config['description'],
+            "description" => $this->description,
             "redirectUrl" => $returnUrl,
-            "method"      => 'ideal',
-            "issuer"      => $bank->getId(),
-        ));
+            "method" => Mollie_API_Object_Method::IDEAL,
+            "issuer" => $bank->getId(),
+        ]);
 
         file_put_contents($this->getFile(), $payment->id);
 
@@ -74,13 +79,16 @@ class MollieDriver implements IDealInterface
      */
     public function confirm()
     {
-        $key = file_get_contents($this->getFile());
-        if ( ! $key) {
+        try {
+            $key = file_get_contents($this->getFile());
+            if (false === $key) {
+                return false;
+            }
+
+            return $this->mollie->payments->get($key)->isPaid();
+        } catch (\Exception $exception) {
             return false;
         }
-        unlink($this->getFile());
-
-        return $this->mollie->payments->get($key);
     }
 
     /**

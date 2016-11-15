@@ -21,21 +21,12 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('ideal');
 
         $rootNode->children()
-            ->arrayNode('providers')->children()
-                    ->arrayNode('easy_ideal')->canBeUnset()->children()
-                        ->scalarNode('id')->isRequired()->end()
-                        ->scalarNode('key')->isRequired()->end()
-                        ->scalarNode('secret')->isRequired()->end()
-                        ->scalarNode('description')->defaultValue('easy ideal payment')->end()
-                    ->end()
-                ->end()
                     ->arrayNode('mollie')->canBeUnset()->children()
                         ->scalarNode('key')->isRequired()->end()
-                        ->scalarNode('description')->defaultValue('mollie payment')->end()
-                        ->booleanNode('testMode')->defaultTrue()->end()
+                        ->scalarNode('description')->defaultValue('mollie ideal payment')->end()
+                        ->booleanNode('test_mode')->defaultTrue()->end()
                     ->end()
-                ->end()
-            ->end();
+                ->end();
 
         return $treeBuilder;
     }

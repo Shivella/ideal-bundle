@@ -9,6 +9,8 @@
 namespace Usoft\IDealBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Usoft\IDealBundle\Model\Bank;
 
@@ -25,11 +27,13 @@ class IDealType extends abstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
-            'banks', 'choice', array(
+            'banks', ChoiceType::class, array(
                 'choices' => $this->getBankList($options['data']),
                 'required'  => true,
             )
         );
+
+        $builder->add('save', SubmitType::class, array());
     }
 
     /**
@@ -41,17 +45,9 @@ class IDealType extends abstractType
     {
         $list = array();
         foreach ($banks as $bank) {
-            $list[$bank->getId()] = $bank->getName();
+            $list[$bank->getName()] = $bank->getId();
         }
 
         return $list;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'ideal';
     }
 }
