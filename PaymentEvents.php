@@ -9,11 +9,11 @@
 namespace Usoft\IDealBundle;
 
 /**
- * Class IDealPaymentEvents
+ * Class PaymentEvents
  *
  * @author Wessel Strengholt <wessel.strengholt@gmail.com>
  */
-final class IDealPaymentEvents
+final class PaymentEvents
 {
     /**
      * The PAYMENT_PLACED event occurs when the payment process executes.

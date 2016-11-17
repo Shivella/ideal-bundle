@@ -17,7 +17,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\RouterInterface;
 use Usoft\IDealBundle\Driver\MollieDriver;
-use Usoft\IDealBundle\IDealPaymentEvents;
+use Usoft\IDealBundle\PaymentEvents;
 use Usoft\IDealBundle\Model\Bank;
 
 /**
@@ -104,7 +104,7 @@ class MollieDriverTest extends \PHPUnit_Framework_TestCase
 
         $this->eventDispatcher->expects($this->once())
             ->method('dispatch')
-            ->with(IDealPaymentEvents::PAYMENT_PLACED);
+            ->with(PaymentEvents::PAYMENT_PLACED);
 
         $this->assertInstanceOf(
             RedirectResponse::class,

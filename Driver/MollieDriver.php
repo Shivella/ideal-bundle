@@ -15,7 +15,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
-use Usoft\IDealBundle\IDealPaymentEvents;
+use Usoft\IDealBundle\PaymentEvents;
 use Usoft\IDealBundle\Model\Bank;
 use Usoft\IDealBundle\Exceptions\BankLoaderException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -100,7 +100,7 @@ class MollieDriver implements IDealInterface
 
             file_put_contents($this->getFile($token), $payment->id);
 
-            $this->eventDispatcher->dispatch(IDealPaymentEvents::PAYMENT_PLACED, new PaymentPlacedEvent($payment));
+            $this->eventDispatcher->dispatch(PaymentEvents::PAYMENT_PLACED, new PaymentPlacedEvent($payment));
 
             return new RedirectResponse($payment->getPaymentUrl());
         } catch (\Exception $exception) {
