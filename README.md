@@ -1,7 +1,7 @@
 Mollie iDeal bundle
 ===================
 
-This Symfony bundle adds support for iDeal payments by Mollie.
+This Symfony3 bundle adds support for iDeal payments by Mollie.
 
 Installation
 ------------
@@ -9,8 +9,7 @@ Installation is a quick 3 step process:
 
 1. Download ideal-bundle using composer
 2. Enable the Bundle in AppKernel.php
-3. Configure Mollie credentials
-
+3. Configure your Mollie credentials
 
 ### Step 1: Download ideal-bundle using composer
 
