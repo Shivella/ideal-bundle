@@ -9,6 +9,6 @@ env:
   - SYMFONY_VERSION=3.1.*
 
 before_script:
-  - composer require symfony/http-foundation:${SYMFONY_VERSION}
+  - composer install
 
 script: phpunit --coverage-text

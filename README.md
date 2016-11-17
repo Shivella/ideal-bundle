@@ -78,10 +78,12 @@ public function paymentAction(Request $request)
 
 /**
  * @Route("/order/confirm", name="route_to_confirm_action")
+ *
+ * @param Request $request
  */
-public function confirmAction()
+public function confirmAction(Request $request)
 {
-    if ($this->get('mollie')->confirm()) {
+    if ($this->get('mollie')->confirm($request)) {
         // handle order....
     } else {
         // Something went wrong...
