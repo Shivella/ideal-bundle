@@ -11,4 +11,4 @@ env:
 before_script:
   - composer install
 
-script: ./vendor/bin/phpunit tests
+script: ./vendor/bin/phpunit Tests
