@@ -1,6 +1,4 @@
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/5b330dc5-6c92-4570-b7de-810522346532/mini.png)](https://insight.sensiolabs.com/projects/5b330dc5-6c92-4570-b7de-810522346532)
-
-[![Build Status](https://travis-ci.org/Shivella/ideal-bundle.svg?branch=master)](https://travis-ci.org/Shivella/ideal-bundle)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/5b330dc5-6c92-4570-b7de-810522346532/mini.png)](https://insight.sensiolabs.com/projects/5b330dc5-6c92-4570-b7de-810522346532) [![Build Status](https://travis-ci.org/Shivella/ideal-bundle.svg?branch=master)](https://travis-ci.org/Shivella/ideal-bundle)
 
 Mollie iDeal bundle
 ===================
