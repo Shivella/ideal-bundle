@@ -1,4 +1,4 @@
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/81fc33fa-b3cf-4050-80f3-5597f03ebf13/mini.png)](https://insight.sensiolabs.com/projects/81fc33fa-b3cf-4050-80f3-5597f03ebf13)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/5b330dc5-6c92-4570-b7de-810522346532/mini.png)](https://insight.sensiolabs.com/projects/5b330dc5-6c92-4570-b7de-810522346532)
 
 Mollie iDeal bundle
 ===================
