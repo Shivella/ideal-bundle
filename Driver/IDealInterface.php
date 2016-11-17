@@ -9,6 +9,7 @@
 namespace Usoft\IDealBundle\Driver;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Usoft\IDealBundle\Model\Bank;
 
 /**
@@ -26,14 +27,16 @@ interface IDealInterface
     /**
      * @param Bank   $bank
      * @param float  $amount
-     * @param string $returnUrl
+     * @param string $routeName
      *
      * @return RedirectResponse
      */
-    public function execute(Bank $bank, $amount, $returnUrl);
+    public function execute(Bank $bank, $amount, $routeName);
 
     /**
+     * @param Request $request
+     *
      * @return bool
      */
-    public function confirm();
+    public function confirm(Request $request);
 }

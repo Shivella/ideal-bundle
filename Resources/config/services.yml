@@ -6,8 +6,10 @@ services:
         class: Usoft\IDealBundle\Driver\MollieDriver
         arguments:
             - "@mollie.client"
-            - %mollie_key%
-            - %mollie_description%
+            - "@router"
+            - "@event_dispatcher"
+            - "%mollie_key%"
+            - "%mollie_description%"
 
     usoft.form.type.ideal:
         class: Usoft\IDealBundle\Form\Type\IDealType

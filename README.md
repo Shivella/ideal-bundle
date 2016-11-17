@@ -65,17 +65,19 @@ public function paymentAction(Request $request)
     $form->handleRequest($request);
 
     if ($form->isValid()) {
-        
+    
         $bank = new Bank($form->getData()['banks'], 'bank');
         $amount = (float) 120.99;
-        $redirectUrl = $this->generateUrl('route_to_confirm_action', array(), UrlGeneratorInterface::ABSOLUTE_URL);
 
-        return $mollie->execute($bank, $amount, $redirectUrl);
+        return $mollie->execute($bank, $amount, 'route_to_confirm_action');
     }
     
     return $this->render('payment.html.twig', ['form' => $form->createView()]);
 }
 
+/**
+ * @Route("/order/confirm", name="route_to_confirm_action")
+ */
 public function confirmAction()
 {
     if ($this->get('mollie')->confirm()) {
