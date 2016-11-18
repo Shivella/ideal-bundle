@@ -9,6 +9,8 @@
 namespace Usoft\IDealBundle\Tests\Driver;
 
 use Mollie_API_Client;
+use Mollie_API_Exception;
+use Mollie_API_Object_Issuer;
 use Mollie_API_Object_Method;
 use Mollie_API_Resource_Issuers;
 use Mollie_API_Resource_Payments;
@@ -17,6 +19,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\RouterInterface;
 use Usoft\IDealBundle\Driver\MollieDriver;
 use Usoft\IDealBundle\PaymentEvents;
@@ -59,6 +62,9 @@ class MollieDriverTest extends \PHPUnit_Framework_TestCase
     /** @var \PHPUnit_Framework_MockObject_MockObject|Filesystem */
     private $filesystem;
 
+    /** @var \PHPUnit_Framework_MockObject_MockObject|Filesystem */
+    private $issuer;
+
     public function setUp()
     {
         $this->mollieAPIClient = $this->createMollie_API_ClientMock();
@@ -70,6 +76,7 @@ class MollieDriverTest extends \PHPUnit_Framework_TestCase
         $this->bank = $this->createBankMock();
         $this->request = $this->createRequestMock();
         $this->filesystem = $this->createFilesystemMock();
+        $this->issuer = $this->createMollie_API_Object_IssuerMock();
 
         $this->mollieDriver = new MollieDriver($this->mollieAPIClient, $this->router, $this->eventDispatcher, $this->filesystem, 'test_secret_key', 'awesome test');
     }
@@ -80,9 +87,23 @@ class MollieDriverTest extends \PHPUnit_Framework_TestCase
 
         $this->issuers->expects($this->once())
             ->method('all')
-            ->willReturn([]);
+            ->willReturn([$this->issuer]);
 
         $this->assertTrue(is_array($this->mollieDriver->getBanks()));
+    }
+
+    /**
+     * @expectedException \Usoft\IDealBundle\Exceptions\BankLoaderException
+     */
+    public function testGetBanksException()
+    {
+        $this->mollieAPIClient->issuers = $this->issuers;
+
+        $this->issuers->expects($this->once())
+            ->method('all')
+            ->willThrowException(new \Exception());
+
+        $this->mollieDriver->getBanks();
     }
 
     public function testExecute()
@@ -124,6 +145,23 @@ class MollieDriverTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Usoft\IDealBundle\Exceptions\IDealExecuteException
+     * @expectedExceptionMessage Router not configured or does not exist
+     */
+    public function testExecuteRouteNotFoundException()
+    {
+        $this->router->expects($this->once())
+            ->method('generate')
+            ->with('confirm_route')
+            ->willThrowException(new RouteNotFoundException);
+
+        $this->eventDispatcher->expects($this->never())
+            ->method('dispatch');
+
+        $this->mollieDriver->execute($this->bank, 12.43, 'confirm_route');
+    }
+
+    /**
+     * @expectedException \Usoft\IDealBundle\Exceptions\IDealExecuteException
      *
      * @throws \Usoft\IDealBundle\Exceptions\IDealExecuteException
      */
@@ -154,6 +192,139 @@ class MollieDriverTest extends \PHPUnit_Framework_TestCase
             ->method('dispatch');
 
         $this->mollieDriver->execute($this->bank, 12.43, 'confirm_route');
+    }
+
+    public function testConfirm()
+    {
+        $this->request->expects($this->once())
+            ->method('get')
+            ->with('token')
+            ->willReturn('awesome-token');
+
+        $this->filesystem->expects($this->once())
+            ->method('exists')
+            ->with(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'awesome-token' . '.txt')
+            ->willReturn(true);
+
+        $this->mollieAPIClient->payments = $this->payments;
+
+        file_put_contents(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'awesome-token' . '.txt', 'test');
+
+        $this->payments->expects($this->once())
+            ->method('get')
+            ->with('test')
+            ->willReturn($this->paymentObject);
+
+        $this->paymentObject->expects($this->once())
+            ->method('isPaid')
+            ->willReturn(true);
+
+        $this->eventDispatcher->expects($this->once())
+            ->method('dispatch')
+            ->with(PaymentEvents::PAYMENT_SUCCESS);
+
+        $this->filesystem->expects($this->once())
+            ->method('remove')
+            ->with(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'awesome-token' . '.txt');
+
+        $this->assertTrue($this->mollieDriver->confirm($this->request));
+    }
+
+    /**
+     * @expectedException \Usoft\IDealBundle\Exceptions\RequestTokenNotFoundException
+     */
+    public function testConfirmTokenNotSet()
+    {
+        $this->request->expects($this->once())
+            ->method('get')
+            ->with('token')
+            ->willReturn(null);
+
+        $this->filesystem->expects($this->never())
+            ->method('exists');
+
+        $this->eventDispatcher->expects($this->never())
+            ->method('dispatch');
+
+        $this->mollieDriver->confirm($this->request);
+    }
+
+    /**
+     * @expectedException \Usoft\IDealBundle\Exceptions\RequestTokenNotFoundException
+     */
+    public function testConfirmFileNotExists()
+    {
+        $this->request->expects($this->once())
+            ->method('get')
+            ->with('token')
+            ->willReturn('test');
+
+        $this->filesystem->expects($this->once())
+            ->method('exists')
+            ->willReturn(false);
+
+        $this->eventDispatcher->expects($this->never())
+            ->method('dispatch');
+
+        $this->mollieDriver->confirm($this->request);
+    }
+
+    public function testConfirmFalse()
+    {
+        $this->request->expects($this->once())
+            ->method('get')
+            ->with('token')
+            ->willReturn('awesome-token');
+
+        $this->filesystem->expects($this->once())
+            ->method('exists')
+            ->with(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'awesome-token' . '.txt')
+            ->willReturn(true);
+
+        $this->mollieAPIClient->payments = $this->payments;
+
+        file_put_contents(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'awesome-token' . '.txt', 'test');
+
+        $this->payments->expects($this->once())
+            ->method('get')
+            ->with('test')
+            ->willReturn($this->paymentObject);
+
+        $this->paymentObject->expects($this->once())
+            ->method('isPaid')
+            ->willReturn(false);
+
+        $this->eventDispatcher->expects($this->once())
+            ->method('dispatch')
+            ->with(PaymentEvents::PAYMENT_FAILED);
+
+        $this->filesystem->expects($this->never())
+            ->method('remove');
+
+        $this->assertFalse($this->mollieDriver->confirm($this->request));
+    }
+
+
+    public function testConfirmException()
+    {
+        $this->request->expects($this->once())
+            ->method('get')
+            ->with('token')
+            ->willReturn('awesome-token');
+
+        $this->filesystem->expects($this->once())
+            ->method('exists')
+            ->with(sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'awesome-token' . '.txt')
+            ->willReturn(true);
+
+        $this->mollieAPIClient->payments = $this->payments;
+
+        $this->payments->expects($this->once())
+            ->method('get')
+            ->with('test')
+            ->willThrowException(new Mollie_API_Exception());
+
+        $this->assertFalse($this->mollieDriver->confirm($this->request));
     }
 
     /**
@@ -239,4 +410,13 @@ class MollieDriverTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
     }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|Mollie_API_Object_Issuer
+     */
+    private function createMollie_API_Object_IssuerMock()
+    {
+        return $this->getMock(Mollie_API_Object_Issuer::class);
+    }
+
 }
