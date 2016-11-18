@@ -9,11 +9,10 @@
 namespace Usoft\IDealBundle\Exceptions;
 
 /**
- * Class InvalidPaymentKeyException
+ * Class InvalidPaymentKeyException.
  *
  * @author Wessel Strengholt <wessel.strengholt@gmail.com>
  */
 class InvalidPaymentKeyException extends \Exception
 {
-
 }

@@ -9,7 +9,7 @@
 namespace Usoft\IDealBundle;
 
 /**
- * Class PaymentEvents
+ * Class PaymentEvents.
  *
  * @author Wessel Strengholt <wessel.strengholt@gmail.com>
  */

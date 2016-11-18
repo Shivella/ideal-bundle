@@ -11,7 +11,7 @@ namespace Usoft\IDealBundle\Tests\Model;
 use Usoft\IDealBundle\Model\Bank;
 
 /**
- * Class BankTest
+ * Class BankTest.
  *
  * @author Wessel Strengholt <wessel.strengholt@gmail.com>
  */

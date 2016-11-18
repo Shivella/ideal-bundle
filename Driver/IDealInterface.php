@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Usoft\IDealBundle\Model\Bank;
 
 /**
- * Interface IDealInterface
+ * Interface IDealInterface.
  *
  * @author Wessel Strengholt <wessel.strengholt@gmail.com>
  */

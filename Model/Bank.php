@@ -9,7 +9,7 @@
 namespace Usoft\IDealBundle\Model;
 
 /**
- * Class Bank
+ * Class Bank.
  *
  * @author Wessel Strengholt <wessel.strengholt@gmail.com>
  */

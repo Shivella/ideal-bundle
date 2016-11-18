@@ -10,18 +10,18 @@ namespace Usoft\IDealBundle\Tests\Driver;
 
 use Mollie_API_Client;
 use Mollie_API_Object_Method;
+use Mollie_API_Object_Payment;
 use Mollie_API_Resource_Issuers;
 use Mollie_API_Resource_Payments;
-use Mollie_API_Object_Payment;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\RouterInterface;
 use Usoft\IDealBundle\Driver\MollieDriver;
-use Usoft\IDealBundle\PaymentEvents;
 use Usoft\IDealBundle\Model\Bank;
+use Usoft\IDealBundle\PaymentEvents;
 
 /**
- * Class MollieDriverTest
+ * Class MollieDriverTest.
  *
  * @author Wessel Strengholt <wessel.strengholt@gmail.com>
  */
@@ -94,11 +94,11 @@ class MollieDriverTest extends \PHPUnit_Framework_TestCase
 
         $this->payments->expects($this->once())->method('create')->with(
             [
-                "amount"      => 12.43,
-                "description" => 'awesome test',
-                "redirectUrl" => 'http://www.awesome-app.com/foo/bar?token=foobar',
-                "method"      => Mollie_API_Object_Method::IDEAL,
-                "issuer"      => 666,
+                'amount'      => 12.43,
+                'description' => 'awesome test',
+                'redirectUrl' => 'http://www.awesome-app.com/foo/bar?token=foobar',
+                'method'      => Mollie_API_Object_Method::IDEAL,
+                'issuer'      => 666,
             ]
         )->willReturn($this->paymentObject);
 
@@ -132,11 +132,11 @@ class MollieDriverTest extends \PHPUnit_Framework_TestCase
 
         $this->payments->expects($this->once())->method('create')->with(
             [
-                "amount"      => 12.43,
-                "description" => 'awesome test',
-                "redirectUrl" => 'http://www.awesome-app.com/foo/bar?token=foobar',
-                "method"      => Mollie_API_Object_Method::IDEAL,
-                "issuer"      => 666,
+                'amount'      => 12.43,
+                'description' => 'awesome test',
+                'redirectUrl' => 'http://www.awesome-app.com/foo/bar?token=foobar',
+                'method'      => Mollie_API_Object_Method::IDEAL,
+                'issuer'      => 666,
             ]
         )->willThrowException(new \Exception());
 
