@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Shivella/ideal-bundle.svg?branch=master)](https://travis-ci.org/Shivella/ideal-bundle)
+
 Mollie iDeal bundle
 ===================
 
