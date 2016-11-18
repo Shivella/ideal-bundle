@@ -69,7 +69,7 @@ public function paymentAction(Request $request)
     if ($form->isValid()) {
     
         $mollie = $this->get('mollie');
-        $bank = new Bank($form->get('banks')->getData());
+        $bank = new Bank($form->get('bank')->getData());
         $amount = (float) 120.99;
 
         return $mollie->execute($bank, $amount, 'route_to_confirm_action');

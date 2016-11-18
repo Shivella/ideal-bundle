@@ -39,7 +39,7 @@ class IDealType extends abstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
-            'banks', ChoiceType::class, array(
+            'bank', ChoiceType::class, array(
                 'choices' => $this->getBankList($this->mollie->getBanks()),
                 'required'  => true,
             )
