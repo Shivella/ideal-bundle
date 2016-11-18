@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/Shivella/ideal-bundle.svg?branch=master)](https://travis-ci.org/Shivella/ideal-bundle)
+[![Build Status](https://travis-ci.org/Shivella/ideal-bundle.svg?branch=master)](https://travis-ci.org/Shivella/ideal-bundle) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/5b330dc5-6c92-4570-b7de-810522346532/mini.png)](https://insight.sensiolabs.com/projects/5b330dc5-6c92-4570-b7de-810522346532) [![Latest Stable Version](https://poser.pugx.org/shivella/ideal-bundle/v/stable)](https://packagist.org/packages/shivella/ideal-bundle) [![License](https://poser.pugx.org/shivella/ideal-bundle/license)](https://packagist.org/packages/shivella/ideal-bundle) [![Total Downloads](https://poser.pugx.org/shivella/ideal-bundle/downloads)](https://packagist.org/packages/shivella/ideal-bundle)
 
 Mollie iDeal bundle
 ===================
@@ -59,14 +59,13 @@ Usage in Controller
 // Acme/Bundle/OrderController.php
 
 public function paymentAction(Request $request)
-{
-    $mollie = $this->get('mollie');
-    
-    $form = $this->createForm(IdealType::class, $mollie->getBanks());
+{   
+    $form = $this->createForm(IdealType::class);
     $form->handleRequest($request);
 
     if ($form->isValid()) {
     
+        $mollie = $this->get('mollie');
         $bank = new Bank($form->getData()['banks'], 'bank');
         $amount = (float) 120.99;
 
