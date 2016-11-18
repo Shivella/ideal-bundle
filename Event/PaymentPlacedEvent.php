@@ -12,7 +12,7 @@ use Mollie_API_Object_Payment;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
- * Class PaymentPlacedEvent
+ * Class PaymentPlacedEvent.
  *
  * @author Wessel Strengholt <wessel.strengholt@gmail.com>
  */

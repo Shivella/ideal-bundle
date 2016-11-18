@@ -15,7 +15,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Usoft\IDealBundle\Model\Bank;
 
 /**
- * Class IDealType
+ * Class IDealType.
  *
  * @author Wessel Strengholt <wessel.strengholt@gmail.com>
  */
@@ -27,13 +27,13 @@ class IDealType extends abstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
-            'banks', ChoiceType::class, array(
-                'choices' => $this->getBankList($options['data']),
+            'banks', ChoiceType::class, [
+                'choices'   => $this->getBankList($options['data']),
                 'required'  => true,
-            )
+            ]
         );
 
-        $builder->add('save', SubmitType::class, array());
+        $builder->add('save', SubmitType::class, []);
     }
 
     /**
@@ -43,7 +43,7 @@ class IDealType extends abstractType
      */
     private function getBankList($banks)
     {
-        $list = array();
+        $list = [];
         foreach ($banks as $bank) {
             $list[$bank->getName()] = $bank->getId();
         }

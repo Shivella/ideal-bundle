@@ -9,11 +9,10 @@
 namespace Usoft\IDealBundle\Exceptions;
 
 /**
- * Class BankLoaderException
+ * Class BankLoaderException.
  *
  * @author Wessel Strengholt <wessel.strengholt@gmail.com>
  */
 class BankLoaderException extends \RuntimeException
 {
-
 }

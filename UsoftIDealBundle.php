@@ -5,7 +5,7 @@ namespace Usoft\IDealBundle;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * Class UsoftIDealBundle
+ * Class UsoftIDealBundle.
  *
  * (c) Wessel Strengholt <wessel.strengholt@gmail.com>
  */

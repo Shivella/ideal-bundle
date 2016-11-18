@@ -9,11 +9,10 @@
 namespace Usoft\IDealBundle\Exceptions;
 
 /**
- * Class IDealExecuteException
+ * Class IDealExecuteException.
  *
  * @author Wessel Strengholt <wessel.strengholt@gmail.com>
  */
 class IDealExecuteException extends \Exception
 {
-
 }
