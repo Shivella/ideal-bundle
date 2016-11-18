@@ -130,7 +130,7 @@ class MollieDriver implements IDealInterface
     {
         $token = $request->get('token');
 
-        if ($token == null) {
+        if ($token === null) {
             throw new RequestTokenNotFoundException('The token is not passed in the url');
         }
 
