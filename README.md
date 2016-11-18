@@ -6,7 +6,7 @@ It is using [Mollie-php-api](https://github.com/mollie/mollie-api-php/). A Molli
 
 For more information see [Mollie](https://www.mollie.com/)
 
-[![Build Status](https://travis-ci.org/Shivella/ideal-bundle.svg?branch=master)](https://travis-ci.org/Shivella/ideal-bundle) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/5b330dc5-6c92-4570-b7de-810522346532/mini.png)](https://insight.sensiolabs.com/projects/5b330dc5-6c92-4570-b7de-810522346532) [![Latest Stable Version](https://poser.pugx.org/shivella/ideal-bundle/v/stable)](https://packagist.org/packages/shivella/ideal-bundle) [![License](https://poser.pugx.org/shivella/ideal-bundle/license)](https://packagist.org/packages/shivella/ideal-bundle) [![Total Downloads](https://poser.pugx.org/shivella/ideal-bundle/downloads)](https://packagist.org/packages/shivella/ideal-bundle)
+[![Build Status](https://travis-ci.org/Shivella/ideal-bundle.svg?branch=master)](https://travis-ci.org/Shivella/ideal-bundle) [![Latest Stable Version](https://poser.pugx.org/shivella/ideal-bundle/v/stable)](https://packagist.org/packages/shivella/ideal-bundle) [![License](https://poser.pugx.org/shivella/ideal-bundle/license)](https://packagist.org/packages/shivella/ideal-bundle) [![Total Downloads](https://poser.pugx.org/shivella/ideal-bundle/downloads)](https://packagist.org/packages/shivella/ideal-bundle)
 
 Installation
 ------------
