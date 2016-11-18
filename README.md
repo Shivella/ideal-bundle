@@ -1,9 +1,12 @@
-[![Build Status](https://travis-ci.org/Shivella/ideal-bundle.svg?branch=master)](https://travis-ci.org/Shivella/ideal-bundle) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/5b330dc5-6c92-4570-b7de-810522346532/mini.png)](https://insight.sensiolabs.com/projects/5b330dc5-6c92-4570-b7de-810522346532) [![Latest Stable Version](https://poser.pugx.org/shivella/ideal-bundle/v/stable)](https://packagist.org/packages/shivella/ideal-bundle) [![License](https://poser.pugx.org/shivella/ideal-bundle/license)](https://packagist.org/packages/shivella/ideal-bundle) [![Total Downloads](https://poser.pugx.org/shivella/ideal-bundle/downloads)](https://packagist.org/packages/shivella/ideal-bundle)
-
 Mollie iDeal bundle
 ===================
 
-This Symfony3 bundle adds support for iDeal payments by Mollie.
+This Symfony3 bundle adds support for [iDEAL](https://www.mollie.com/ideal/) payments by Mollie.
+It is using [Mollie-php-api](https://github.com/mollie/mollie-api-php/). A Mollie account is required. 
+
+For more information see [Mollie](https://www.mollie.com/)
+
+[![Build Status](https://travis-ci.org/Shivella/ideal-bundle.svg?branch=master)](https://travis-ci.org/Shivella/ideal-bundle) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/5b330dc5-6c92-4570-b7de-810522346532/mini.png)](https://insight.sensiolabs.com/projects/5b330dc5-6c92-4570-b7de-810522346532) [![Latest Stable Version](https://poser.pugx.org/shivella/ideal-bundle/v/stable)](https://packagist.org/packages/shivella/ideal-bundle) [![License](https://poser.pugx.org/shivella/ideal-bundle/license)](https://packagist.org/packages/shivella/ideal-bundle) [![Total Downloads](https://poser.pugx.org/shivella/ideal-bundle/downloads)](https://packagist.org/packages/shivella/ideal-bundle)
 
 Installation
 ------------
@@ -66,7 +69,7 @@ public function paymentAction(Request $request)
     if ($form->isValid()) {
     
         $mollie = $this->get('mollie');
-        $bank = new Bank($form->getData()['banks'], 'bank');
+        $bank = new Bank($form->get('banks')->getData());
         $amount = (float) 120.99;
 
         return $mollie->execute($bank, $amount, 'route_to_confirm_action');

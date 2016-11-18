@@ -14,7 +14,9 @@ use Mollie_API_Resource_Issuers;
 use Mollie_API_Resource_Payments;
 use Mollie_API_Object_Payment;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 use Usoft\IDealBundle\Driver\MollieDriver;
 use Usoft\IDealBundle\PaymentEvents;
@@ -51,6 +53,12 @@ class MollieDriverTest extends \PHPUnit_Framework_TestCase
     /** @var \PHPUnit_Framework_MockObject_MockObject|EventDispatcherInterface */
     private $eventDispatcher;
 
+    /** @var \PHPUnit_Framework_MockObject_MockObject|Request */
+    private $request;
+
+    /** @var \PHPUnit_Framework_MockObject_MockObject|Filesystem */
+    private $filesystem;
+
     public function setUp()
     {
         $this->mollieAPIClient = $this->createMollie_API_ClientMock();
@@ -60,8 +68,10 @@ class MollieDriverTest extends \PHPUnit_Framework_TestCase
         $this->router = $this->createRouterInterfaceMock();
         $this->eventDispatcher = $this->createEventDispatcherInterfaceMock();
         $this->bank = $this->createBankMock();
+        $this->request = $this->createRequestMock();
+        $this->filesystem = $this->createFilesystemMock();
 
-        $this->mollieDriver = new MollieDriver($this->mollieAPIClient, $this->router, $this->eventDispatcher, 'test_secret_key', 'awesome test');
+        $this->mollieDriver = new MollieDriver($this->mollieAPIClient, $this->router, $this->eventDispatcher, $this->filesystem, 'test_secret_key', 'awesome test');
     }
 
     public function testGetBanks()
@@ -140,6 +150,9 @@ class MollieDriverTest extends \PHPUnit_Framework_TestCase
             ]
         )->willThrowException(new \Exception());
 
+        $this->eventDispatcher->expects($this->never())
+            ->method('dispatch');
+
         $this->mollieDriver->execute($this->bank, 12.43, 'confirm_route');
     }
 
@@ -205,5 +218,25 @@ class MollieDriverTest extends \PHPUnit_Framework_TestCase
     private function createEventDispatcherInterfaceMock()
     {
         return $this->getMock(EventDispatcherInterface::class);
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|Request
+     */
+    private function createRequestMock()
+    {
+        return $this->getMockBuilder(Request::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+    }
+
+    /**
+     * @return \PHPUnit_Framework_MockObject_MockObject|Filesystem
+     */
+    private function createFilesystemMock()
+    {
+        return $this->getMockBuilder(Filesystem::class)
+            ->disableOriginalConstructor()
+            ->getMock();
     }
 }

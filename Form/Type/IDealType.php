@@ -12,6 +12,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Usoft\IDealBundle\Driver\MollieDriver;
 use Usoft\IDealBundle\Model\Bank;
 
 /**
@@ -21,6 +22,17 @@ use Usoft\IDealBundle\Model\Bank;
  */
 class IDealType extends abstractType
 {
+    /** @var MollieDriver */
+    private $mollie;
+
+    /**
+     * @param MollieDriver $mollie
+     */
+    public function __construct(MollieDriver $mollie)
+    {
+        $this->mollie = $mollie;
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -28,7 +40,7 @@ class IDealType extends abstractType
     {
         $builder->add(
             'banks', ChoiceType::class, array(
-                'choices' => $this->getBankList($options['data']),
+                'choices' => $this->getBankList($this->mollie->getBanks()),
                 'required'  => true,
             )
         );

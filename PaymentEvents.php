@@ -21,4 +21,18 @@ final class PaymentEvents
      * @Event("Usoft\IDealBundle\Event\PaymentCreatedEvent")
      */
     const PAYMENT_PLACED = 'ideal.payment_placed.event';
+
+    /**
+     * The PAYMENT_SUCCESS event occurs when the payment process succeed.
+     *
+     * @Event("Usoft\IDealBundle\Event\PaymentSuccessEvent")
+     */
+    const PAYMENT_SUCCESS = 'ideal.payment_success.event';
+
+    /**
+     * The PAYMENT_FAILED event occurs when the payment failed.
+     *
+     * @Event("Usoft\IDealBundle\Event\PaymentFailedEvent")
+     */
+    const PAYMENT_FAILED = 'ideal.payment_failed.event';
 }

@@ -8,10 +8,13 @@ services:
             - "@mollie.client"
             - "@router"
             - "@event_dispatcher"
+            - "@filesystem"
             - "%mollie_key%"
             - "%mollie_description%"
 
     usoft.form.type.ideal:
         class: Usoft\IDealBundle\Form\Type\IDealType
+        arguments:
+            - "@mollie"
         tags:
             - { name: form.type, alias: ideal }
