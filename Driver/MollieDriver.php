@@ -114,7 +114,7 @@ class MollieDriver implements IDealInterface
             ]);
 
             $this->filesystem->dumpFile($this->getFilePath($token), $payment->id);
-            $this->eventDispatcher->dispatch(PaymentEvents::PAYMENT_PLACED, new PaymentPlacedEvent($payment));
+            $this->eventDispatcher->dispatch(PaymentEvents::PAYMENT_PLACED, new PaymentPlacedEvent(new \DateTime('now'), $amount, $payment->id, $payment->status));
 
             return new RedirectResponse($payment->getPaymentUrl());
 
@@ -144,13 +144,13 @@ class MollieDriver implements IDealInterface
 
             if ($payment->isPaid() === true) {
 
-                $this->eventDispatcher->dispatch(PaymentEvents::PAYMENT_SUCCESS, new PaymentSuccessEvent(new \DateTime('now'), $payment->amount, $payment->id, $payment->description));
+                $this->eventDispatcher->dispatch(PaymentEvents::PAYMENT_SUCCESS, new PaymentSuccessEvent(new \DateTime('now'), $payment->amount, $payment->id, $payment->status));
                 $this->filesystem->remove($this->getFilePath($token));
 
                 return true;
             }
 
-            $this->eventDispatcher->dispatch(PaymentEvents::PAYMENT_FAILED, new PaymentFailedEvent(new \DateTime('now'), $payment->amount, $payment->id, $payment->description));
+            $this->eventDispatcher->dispatch(PaymentEvents::PAYMENT_FAILED, new PaymentFailedEvent(new \DateTime('now'), $payment->amount, $payment->id, $payment->status));
 
             return false;
 
