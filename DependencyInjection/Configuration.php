@@ -1,4 +1,10 @@
 <?php
+/*
+* (c) Wessel Strengholt <wessel.strengholt@gmail.com>
+*
+* For the full copyright and license information, please view the LICENSE
+* file that was distributed with this source code.
+*/
 
 namespace Usoft\IDealBundle\DependencyInjection;
 
@@ -6,9 +12,9 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
- * This is the class that validates and merges configuration from your app/config files
+ * Class Configuration
  *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
+ * @author Wessel Strengholt <wessel.strengholt@gmail.com>
  */
 class Configuration implements ConfigurationInterface
 {
@@ -18,14 +24,14 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('ideal');
+        $rootNode = $treeBuilder->root('usoft_i_deal');
 
         $rootNode->children()
-                    ->arrayNode('mollie')->canBeUnset()->children()
-                        ->scalarNode('key')->isRequired()->end()
-                        ->scalarNode('description')->defaultValue('mollie ideal payment')->end()
-                    ->end()
-                ->end();
+            ->arrayNode('mollie')->isRequired()->children()
+                ->scalarNode('key')->isRequired()->end()
+                ->scalarNode('description')->defaultValue('mollie ideal payment')->end()
+            ->end()
+            ->end();
 
         return $treeBuilder;
     }
