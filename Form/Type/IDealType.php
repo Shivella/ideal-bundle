@@ -12,7 +12,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Usoft\IDealBundle\Driver\MollieDriver;
+use Usoft\IDealBundle\Driver\IDealInterface;
 use Usoft\IDealBundle\Model\Bank;
 
 /**
@@ -22,13 +22,13 @@ use Usoft\IDealBundle\Model\Bank;
  */
 class IDealType extends abstractType
 {
-    /** @var MollieDriver */
+    /** @var IDealInterface */
     private $mollie;
 
     /**
-     * @param MollieDriver $mollie
+     * @param IDealInterface $mollie
      */
-    public function __construct(MollieDriver $mollie)
+    public function __construct(IDealInterface $mollie)
     {
         $this->mollie = $mollie;
     }
