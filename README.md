@@ -6,7 +6,7 @@ It is using [Mollie-php-api](https://github.com/mollie/mollie-api-php/). A Molli
 
 For more information see [Mollie](https://www.mollie.com/)
 
-[![Build Status](https://travis-ci.org/Shivella/ideal-bundle.svg?branch=master)](https://travis-ci.org/Shivella/ideal-bundle) [![Latest Stable Version](https://poser.pugx.org/shivella/ideal-bundle/v/stable)](https://packagist.org/packages/shivella/ideal-bundle) [![License](https://poser.pugx.org/shivella/ideal-bundle/license)](https://packagist.org/packages/shivella/ideal-bundle) [![Total Downloads](https://poser.pugx.org/shivella/ideal-bundle/downloads)](https://packagist.org/packages/shivella/ideal-bundle)
+[![Build Status](https://travis-ci.org/Shivella/ideal-bundle.svg?branch=master)](https://travis-ci.org/Shivella/ideal-bundle) [![Latest Stable Version](https://poser.pugx.org/shivella/ideal-bundle/v/stable)](https://packagist.org/packages/shivella/ideal-bundle) [![License](https://poser.pugx.org/shivella/ideal-bundle/license)](https://packagist.org/packages/shivella/ideal-bundle) [![Total Downloads](https://poser.pugx.org/shivella/ideal-bundle/downloads)](https://packagist.org/packages/shivella/ideal-bundle) [![Coverage Status](https://coveralls.io/repos/github/Shivella/ideal-bundle/badge.svg?branch=master)](https://coveralls.io/github/Shivella/ideal-bundle?branch=master)
 
 Installation
 ------------
