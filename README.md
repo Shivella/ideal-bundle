@@ -1,3 +1,10 @@
+THIS BUNDLE IS DEPRECATED
+=========================
+
+Please consider using: https://github.com/ruudk/PaymentMollieBundle
+
+
+
 Mollie iDeal bundle
 ===================
 
