@@ -25,5 +25,8 @@
         "psr-4": {
             "Usoft\\IDealBundle\\": ""
         }
-    }
+    },
+    "suggest": {
+        "ruudk/payment-mollie-bundle": "Please migrate from shivella/ideal-bundle to ruudk/payment-mollie-bundle"
+    }    
 }
