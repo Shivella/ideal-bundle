@@ -2,6 +2,7 @@
     "name": "shivella/ideal-bundle",
     "type": "symfony-bundle",
     "description": "Symfony iDeal Bundle",
+    "abandoned": "ruudk/payment-mollie-bundle",
     "keywords": ["iDeal", "Bundle", "Symfony", "Mollie", "Easy Ideal"],
     "homepage": "https://github.com/Shivella/ideal-bundle",
     "license": "MIT",
